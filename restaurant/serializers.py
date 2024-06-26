@@ -27,17 +27,3 @@ class MenuListSerializer(serializers.ModelSerializer):
 
 class MenuDetailSerializer(MenuSerializer):
     restaurant = RestaurantSerializer()
-
-
-class MenuListInRestaurantSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Menu
-        fields = ("id", "image", "description", "date")
-
-
-class RestaurantDetailSerializer(serializers.ModelSerializer):
-    menus = MenuListInRestaurantSerializer(many=True)
-
-    class Meta:
-        model = Restaurant
-        fields = ("id", "name", "address", "phone_number", "menus",)

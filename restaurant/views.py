@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 from restaurant.models import Restaurant, Menu
 from restaurant.serializers import (
     RestaurantSerializer,
-    RestaurantDetailSerializer,
     MenuSerializer,
     MenuListSerializer,
     MenuDetailSerializer
