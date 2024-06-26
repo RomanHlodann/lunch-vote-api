@@ -17,7 +17,12 @@ class Vote(models.Model):
     created_at = models.DateField(auto_now_add=True)
 
     class Meta:
-        unique_together = ("user", "menu", "created_at",)
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "menu", "created_at"],
+                name="unique_vote"
+            ),
+        ]
 
     def __str__(self):
         return f"{self.user.email} - {self.menu}"
