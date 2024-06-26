@@ -3,6 +3,7 @@ from django.db.models import Count, F
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from vote.models import Vote
 from vote.serializers import (
@@ -10,11 +11,14 @@ from vote.serializers import (
     VoteDetailSerializer,
     VoteListSerializer
 )
+from restaurant.views import DefaultPagination
 
 
 class VoteViewSet(viewsets.ModelViewSet):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = DefaultPagination
 
     @action(detail=False, methods=["get"], url_path="results")
     def get_results(self, request):
