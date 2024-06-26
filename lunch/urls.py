@@ -24,4 +24,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/users/", include("user.urls", namespace="user")),
     path("api/restaurants/", include("restaurant.urls", namespace="restaurant")),
+    path("api/votes/", include("vote.urls", namespace="vote")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
