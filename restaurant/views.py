@@ -13,6 +13,11 @@ from restaurant.serializers import (
 )
 
 
+class DefaultPagination(PageNumberPagination):
+    page_size = 10
+    max_page_size = 100
+
+
 class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
 
