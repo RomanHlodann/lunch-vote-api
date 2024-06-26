@@ -22,20 +22,7 @@ class DefaultPagination(PageNumberPagination):
 
 class RestaurantViewSet(viewsets.ModelViewSet):
     queryset = Restaurant.objects.all()
-
-    def get_queryset(self):
-        queryset = Restaurant.objects.all()
-        if self.action == "retrieve":
-            today = datetime.date.today()
-            queryset = (queryset.prefetch_related(
-                Prefetch("menus", queryset=Menu.objects.filter(date=today))
-            ))
-        return queryset
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            return RestaurantDetailSerializer
-        return RestaurantSerializer
+    serializer_class = RestaurantSerializer
     permission_classes = (IsAuthenticated,)
     pagination_class = DefaultPagination
 
