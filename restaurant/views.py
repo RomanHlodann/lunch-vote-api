@@ -1,7 +1,9 @@
-import datetime
+from datetime import datetime
 
 from django.db.models import Prefetch
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 
 from restaurant.models import Restaurant, Menu
 from restaurant.serializers import (
@@ -34,11 +36,15 @@ class RestaurantViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return RestaurantDetailSerializer
         return RestaurantSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = DefaultPagination
 
 
 class MenuViewSet(viewsets.ModelViewSet):
     queryset = Menu.objects.select_related("restaurant")
     serializer_class = MenuSerializer
+    permission_classes = (IsAuthenticated,)
+    pagination_class = DefaultPagination
 
     def get_serializer_class(self):
         if self.action == "list":
