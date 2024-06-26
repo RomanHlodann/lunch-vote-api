@@ -5,7 +5,11 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from vote.models import Vote
-from vote.serializers import VoteSerializer, VoteDetailSerializer, VoteListSerializer
+from vote.serializers import (
+    VoteSerializer,
+    VoteDetailSerializer,
+    VoteListSerializer
+)
 
 
 class VoteViewSet(viewsets.ModelViewSet):
@@ -21,7 +25,9 @@ class VoteViewSet(viewsets.ModelViewSet):
                                description=F("menu__description"),
                                restaurant_name=F("menu__restaurant__name"),
                                date=F("menu__date"))
-                       .annotate(vote_count=Count("id")).order_by("-vote_count"))
+                       .annotate(
+                            vote_count=Count("id")).order_by("-vote_count")
+                       )
 
         return Response(votes_count, status=status.HTTP_200_OK)
 

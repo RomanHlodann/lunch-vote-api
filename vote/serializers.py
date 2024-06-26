@@ -17,7 +17,8 @@ class VoteListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vote
-        fields = ("id", "menu_description", "restaurant_name", "created_at", "email",)
+        fields = ("id", "menu_description", "restaurant_name",
+                  "created_at", "email",)
 
 
 class VoteDetailSerializer(VoteListSerializer):
