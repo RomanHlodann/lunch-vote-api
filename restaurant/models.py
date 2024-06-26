@@ -6,9 +6,14 @@ from django.utils.text import slugify
 
 
 class Restaurant(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     address = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True,
+        unique=True
+    )
 
     def __str__(self) -> str:
         return self.name
