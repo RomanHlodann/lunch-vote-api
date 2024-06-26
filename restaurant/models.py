@@ -24,6 +24,7 @@ def menu_image_file_path(instance, filename):
 class Menu(models.Model):
     image = models.ImageField(upload_to=menu_image_file_path)
     description = models.CharField(max_length=255, blank=True, null=True)
+    date = models.DateField()
     restaurant = models.ForeignKey(
         Restaurant,
         on_delete=models.CASCADE,
