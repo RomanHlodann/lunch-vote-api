@@ -34,3 +34,6 @@ class Menu(models.Model):
         on_delete=models.CASCADE,
         related_name="menus"
     )
+
+    def __str__(self) -> str:
+        return f"{self.description} from {self.restaurant.name}"
