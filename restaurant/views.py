@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
@@ -61,3 +63,28 @@ class MenuViewSet(viewsets.ModelViewSet):
         elif self.action == "retrieve":
             return MenuDetailSerializer
         return self.serializer_class
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "all",
+                type=OpenApiTypes.BOOL,
+                description="Display all menus?",
+            ),
+            OpenApiParameter(
+                "restaurants",
+                type={"type": "list", "items": {"type": "number"}},
+                description="Filter by restaurant id (ex. ?restaurants=2,5)",
+            ),
+            OpenApiParameter(
+                "lunch_date",
+                type=OpenApiTypes.DATE,
+                description=(
+                        "Filter by date. Default is today"
+                        "(ex. ?date=2022-10-23)"
+                ),
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)

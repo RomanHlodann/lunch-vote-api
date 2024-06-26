@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "drf_spectacular",
     "restaurant",
     "vote",
     "user",
@@ -134,6 +135,13 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Lunch Vote API",
+    "DESCRIPTION": "Vote for restaurant and menu to have lunch in",
+    "VERSION": "1.0.0",
 }
 
 AUTH_USER_MODEL = "user.User"

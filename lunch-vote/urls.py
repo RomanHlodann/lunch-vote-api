@@ -19,6 +19,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularSwaggerView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -29,4 +33,10 @@ urlpatterns = [
                 namespace="restaurant")
     ),
     path("api/votes/", include("vote.urls", namespace="vote")),
+    path("api/doc/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/doc/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui"
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

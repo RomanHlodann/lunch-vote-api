@@ -1,5 +1,7 @@
 from datetime import datetime
 from django.db.models import Count, F
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -22,6 +24,7 @@ class VoteViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=["get"], url_path="results")
     def get_results(self, request):
+        """Get results of today`s voting"""
         queryset = self.get_queryset()
 
         votes_count = (queryset.select_related("menu", "menu__restaurant")
@@ -47,6 +50,21 @@ class VoteViewSet(viewsets.ModelViewSet):
             queryset = queryset.select_related("menu", "menu__restaurant")
 
         return queryset.filter(created_at=today)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "date",
+                type=OpenApiTypes.DATE,
+                description=(
+                        "Filter by date. Default is today"
+                        "(ex. ?date=2022-10-23)"
+                ),
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
     def get_serializer_class(self):
         if self.action == "list":
