@@ -55,4 +55,3 @@ class TestVote(TestCase):
             status.HTTP_200_OK, response.status_code
         )
         self.assertEqual(response.data["count"], 2)
-
